@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,17 +7,15 @@ using NormfallstudieDatenservice.Models;
 
 namespace NormfallstudieDatenservice.Controllers
 {
-    [Route("api/airline/[controller]")]
+    [Route("api/hotel/[controller]")]
     [ApiController]
-    public class SwissController : ControllerBase
+    public class IbisController : ControllerBase
     {
 
-        private readonly SwissContext _context;
+        private readonly IbisContext _context;
 
-        public SwissController(SwissContext context)
+        public IbisController(IbisContext context)
         {
-            _context = context;
-
             var Destinations = _context.Destinations.ToList();
             if (Destinations.Count != 5)
             {
@@ -41,68 +37,67 @@ namespace NormfallstudieDatenservice.Controllers
                 _context.SaveChanges();
 
             }
-
         }
         
-        // GET: api/airline/swiss
+        // GET: api/hotel/ibis
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SwissFlight>>> GetSwissFlights()
+        public async Task<ActionResult<IEnumerable<IbisNight>>> GetIbisNights()
         {
-            return await _context.SwissFlights.ToListAsync();
+            return await _context.IbisNights.ToListAsync();
         }
         
-        // GET: api/airline/swiss/1
+        // GET: api/hotel/ibis/1
         [HttpGet("{id}")]
-        public async Task<ActionResult<SwissFlight>> GetSwissFlight(int id)
+        public async Task<ActionResult<IbisNight>> GetIbisNight(int id)
         {
-            var swissFlight = await _context.SwissFlights.FindAsync(id);
+            var ibisNight = await _context.IbisNights.FindAsync(id);
 
-            if (swissFlight == null)
+            if (ibisNight == null)
             {
                 return NotFound();
             }
 
-            return swissFlight;
+            return ibisNight;
 
         }
         
-        // POST: api/airline/swiss
+        // POST: api/hotel/ibis
         [HttpPost]
-        public async Task<ActionResult<SwissFlight>> PostSwissFlight(SwissFlight swissFlight)
+        public async Task<ActionResult<HiltonNight>> PostIbisNight(IbisNight ibisNight)
         {
-            _context.SwissFlights.Add(swissFlight);
+            _context.IbisNights.Add(ibisNight);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetSwissFlight), new {id = swissFlight.SwissFlightId}, swissFlight);
+            return CreatedAtAction(nameof(GetIbisNight), new {id = ibisNight.IbisNightId}, ibisNight);
         }
-                
-        // PUT: api/airline/swiss/1
+        
+        // PUT: api/hotel/ibis/1
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSwissFlight(long id, SwissFlight swissFlight)
+        public async Task<IActionResult> PutIbisNight(long id, IbisNight ibisNight)
         {
-            if (id != swissFlight.SwissFlightId)
+            if (id != ibisNight.IbisNightId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(swissFlight).State = EntityState.Modified;
+            _context.Entry(ibisNight).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
         
-        // DELETE: api/airline/swiss/1
+        // DELETE: api/hotel/ibis/1
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSwissFlight(long id)
+        public async Task<IActionResult> DeleteIbisNight(long id)
         {
-            var swissFlight = await _context.SwissFlights.FindAsync(id);
+            var ibisNight = await _context.IbisNights.FindAsync(id);
 
-            if (swissFlight == null)
+            if (ibisNight == null)
             {
                 return NotFound();
             }
 
-            _context.SwissFlights.Remove(swissFlight);
+            _context.IbisNights.Remove(ibisNight);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -110,5 +105,4 @@ namespace NormfallstudieDatenservice.Controllers
         }
 
     }
-    
 }

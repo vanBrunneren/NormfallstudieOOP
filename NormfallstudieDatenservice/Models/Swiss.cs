@@ -6,7 +6,7 @@ namespace NormfallstudieDatenservice.Models
     {
 
         public DbSet<SwissFlight> SwissFlights { get; set; }
-        public DbSet<SwissDestination> SwissDestinations { get; set; }
+        public DbSet<Destination> Destinations { get; set; }
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -18,16 +18,10 @@ namespace NormfallstudieDatenservice.Models
     public class SwissFlight
     {
         public int SwissFlightId { get; set; }
-        public SwissDestination StartDestination { get; set; }
-        public SwissDestination EndDestination { get; set; }
+        public Destination StartDestination { get; set; }
+        public Destination EndDestination { get; set; }
         public string Date { get; set; }
         public int EmptyPlaces { get; set; }  
     }
 
-    public class SwissDestination
-    {
-        public int SwissDestinationId { get; set; }
-        public string Name { get; set; }
-    }
-    
 }

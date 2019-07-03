@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,17 +7,15 @@ using NormfallstudieDatenservice.Models;
 
 namespace NormfallstudieDatenservice.Controllers
 {
-    [Route("api/airline/[controller]")]
+    [Route("api/hotel/[controller]")]
     [ApiController]
-    public class SwissController : ControllerBase
+    public class HiltonController : ControllerBase
     {
 
-        private readonly SwissContext _context;
+        private readonly HiltonContext _context;
 
-        public SwissController(SwissContext context)
+        public HiltonController(HiltonContext context)
         {
-            _context = context;
-
             var Destinations = _context.Destinations.ToList();
             if (Destinations.Count != 5)
             {
@@ -41,68 +37,67 @@ namespace NormfallstudieDatenservice.Controllers
                 _context.SaveChanges();
 
             }
-
         }
         
-        // GET: api/airline/swiss
+        // GET: api/hotel/hilton
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SwissFlight>>> GetSwissFlights()
+        public async Task<ActionResult<IEnumerable<HiltonNight>>> GetHiltonNights()
         {
-            return await _context.SwissFlights.ToListAsync();
+            return await _context.HiltonNights.ToListAsync();
         }
         
-        // GET: api/airline/swiss/1
+        // GET: api/hotel/hilton/1
         [HttpGet("{id}")]
-        public async Task<ActionResult<SwissFlight>> GetSwissFlight(int id)
+        public async Task<ActionResult<HiltonNight>> GetHiltonNight(int id)
         {
-            var swissFlight = await _context.SwissFlights.FindAsync(id);
+            var hiltonNight = await _context.HiltonNights.FindAsync(id);
 
-            if (swissFlight == null)
+            if (hiltonNight == null)
             {
                 return NotFound();
             }
 
-            return swissFlight;
+            return hiltonNight;
 
         }
         
-        // POST: api/airline/swiss
+        // POST: api/hotel/hilton
         [HttpPost]
-        public async Task<ActionResult<SwissFlight>> PostSwissFlight(SwissFlight swissFlight)
+        public async Task<ActionResult<HiltonNight>> PostHiltonNight(HiltonNight hiltonNight)
         {
-            _context.SwissFlights.Add(swissFlight);
+            _context.HiltonNights.Add(hiltonNight);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetSwissFlight), new {id = swissFlight.SwissFlightId}, swissFlight);
+            return CreatedAtAction(nameof(GetHiltonNight), new {id = hiltonNight.HiltonNightId}, hiltonNight);
         }
-                
-        // PUT: api/airline/swiss/1
+        
+        // PUT: api/hotel/hilton/1
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSwissFlight(long id, SwissFlight swissFlight)
+        public async Task<IActionResult> PutHiltonNight(long id, HiltonNight hiltonNight)
         {
-            if (id != swissFlight.SwissFlightId)
+            if (id != hiltonNight.HiltonNightId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(swissFlight).State = EntityState.Modified;
+            _context.Entry(hiltonNight).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
         
-        // DELETE: api/airline/swiss/1
+        // DELETE: api/hotel/hilton/1
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSwissFlight(long id)
+        public async Task<IActionResult> DeleteHiltonNight(long id)
         {
-            var swissFlight = await _context.SwissFlights.FindAsync(id);
+            var hiltonNight = await _context.HiltonNights.FindAsync(id);
 
-            if (swissFlight == null)
+            if (hiltonNight == null)
             {
                 return NotFound();
             }
 
-            _context.SwissFlights.Remove(swissFlight);
+            _context.HiltonNights.Remove(hiltonNight);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -110,5 +105,4 @@ namespace NormfallstudieDatenservice.Controllers
         }
 
     }
-    
 }

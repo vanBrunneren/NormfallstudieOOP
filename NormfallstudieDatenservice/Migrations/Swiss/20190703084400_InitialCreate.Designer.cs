@@ -6,28 +6,28 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NormfallstudieDatenservice.Models;
 
-namespace NormfallstudieDatenservice.Migrations
+namespace NormfallstudieDatenservice.Migrations.Swiss
 {
     [DbContext(typeof(SwissContext))]
-    [Migration("20190702190639_rename")]
-    partial class rename
+    [Migration("20190703084400_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846");
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
 
-            modelBuilder.Entity("NormfallstudieDatenservice.Models.SwissDestination", b =>
+            modelBuilder.Entity("NormfallstudieDatenservice.Models.Destination", b =>
                 {
-                    b.Property<int>("SwissDestinationId")
+                    b.Property<int>("DestinationId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
 
-                    b.HasKey("SwissDestinationId");
+                    b.HasKey("DestinationId");
 
-                    b.ToTable("SwissDestinations");
+                    b.ToTable("Destinations");
                 });
 
             modelBuilder.Entity("NormfallstudieDatenservice.Models.SwissFlight", b =>
@@ -39,28 +39,28 @@ namespace NormfallstudieDatenservice.Migrations
 
                     b.Property<int>("EmptyPlaces");
 
-                    b.Property<int?>("EndDestinationSwissDestinationId");
+                    b.Property<int?>("EndDestinationDestinationId");
 
-                    b.Property<int?>("StartDestinationSwissDestinationId");
+                    b.Property<int?>("StartDestinationDestinationId");
 
                     b.HasKey("SwissFlightId");
 
-                    b.HasIndex("EndDestinationSwissDestinationId");
+                    b.HasIndex("EndDestinationDestinationId");
 
-                    b.HasIndex("StartDestinationSwissDestinationId");
+                    b.HasIndex("StartDestinationDestinationId");
 
                     b.ToTable("SwissFlights");
                 });
 
             modelBuilder.Entity("NormfallstudieDatenservice.Models.SwissFlight", b =>
                 {
-                    b.HasOne("NormfallstudieDatenservice.Models.SwissDestination", "EndDestination")
+                    b.HasOne("NormfallstudieDatenservice.Models.Destination", "EndDestination")
                         .WithMany()
-                        .HasForeignKey("EndDestinationSwissDestinationId");
+                        .HasForeignKey("EndDestinationDestinationId");
 
-                    b.HasOne("NormfallstudieDatenservice.Models.SwissDestination", "StartDestination")
+                    b.HasOne("NormfallstudieDatenservice.Models.Destination", "StartDestination")
                         .WithMany()
-                        .HasForeignKey("StartDestinationSwissDestinationId");
+                        .HasForeignKey("StartDestinationDestinationId");
                 });
 #pragma warning restore 612, 618
         }

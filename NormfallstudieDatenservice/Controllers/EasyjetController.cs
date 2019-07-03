@@ -11,12 +11,12 @@ namespace NormfallstudieDatenservice.Controllers
 {
     [Route("api/airline/[controller]")]
     [ApiController]
-    public class SwissController : ControllerBase
+    public class EasyjetController : ControllerBase
     {
 
-        private readonly SwissContext _context;
+        private readonly EasyjetContext _context;
 
-        public SwissController(SwissContext context)
+        public EasyjetController(EasyjetContext context)
         {
             _context = context;
 
@@ -44,65 +44,65 @@ namespace NormfallstudieDatenservice.Controllers
 
         }
         
-        // GET: api/airline/swiss
+        // GET: api/airline/easyjet
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SwissFlight>>> GetSwissFlights()
+        public async Task<ActionResult<IEnumerable<EasyjetFlight>>> GetEasyjetFlights()
         {
-            return await _context.SwissFlights.ToListAsync();
+            return await _context.EasyjetFlights.ToListAsync();
         }
         
-        // GET: api/airline/swiss/1
+        // GET: api/airline/easyjet/1
         [HttpGet("{id}")]
-        public async Task<ActionResult<SwissFlight>> GetSwissFlight(int id)
+        public async Task<ActionResult<EasyjetFlight>> GetEasyjetFlight(int id)
         {
-            var swissFlight = await _context.SwissFlights.FindAsync(id);
+            var easyjetFlight = await _context.EasyjetFlights.FindAsync(id);
 
-            if (swissFlight == null)
+            if (easyjetFlight == null)
             {
                 return NotFound();
             }
 
-            return swissFlight;
+            return easyjetFlight;
 
         }
         
-        // POST: api/airline/swiss
+        // POST: api/airline/easyjet
         [HttpPost]
-        public async Task<ActionResult<SwissFlight>> PostSwissFlight(SwissFlight swissFlight)
+        public async Task<ActionResult<EasyjetFlight>> PostEasyjetFlight(EasyjetFlight easyjetFlight)
         {
-            _context.SwissFlights.Add(swissFlight);
+            _context.EasyjetFlights.Add(easyjetFlight);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetSwissFlight), new {id = swissFlight.SwissFlightId}, swissFlight);
+            return CreatedAtAction(nameof(GetEasyjetFlight), new {id = easyjetFlight.EasyjetFlightId}, easyjetFlight);
         }
                 
-        // PUT: api/airline/swiss/1
+        // PUT: api/airline/easyjet/1
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSwissFlight(long id, SwissFlight swissFlight)
+        public async Task<IActionResult> PutEasyjetFlight(long id, EasyjetFlight easyjetFlight)
         {
-            if (id != swissFlight.SwissFlightId)
+            if (id != easyjetFlight.EasyjetFlightId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(swissFlight).State = EntityState.Modified;
+            _context.Entry(easyjetFlight).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
         
-        // DELETE: api/airline/swiss/1
+        // DELETE: api/airline/easyjet/1
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSwissFlight(long id)
+        public async Task<IActionResult> DeleteEasyjetFlight(long id)
         {
-            var swissFlight = await _context.SwissFlights.FindAsync(id);
+            var easyjetFlight = await _context.EasyjetFlights.FindAsync(id);
 
-            if (swissFlight == null)
+            if (easyjetFlight == null)
             {
                 return NotFound();
             }
 
-            _context.SwissFlights.Remove(swissFlight);
+            _context.EasyjetFlights.Remove(easyjetFlight);
             await _context.SaveChangesAsync();
 
             return NoContent();

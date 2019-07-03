@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace NormfallstudieDatenservice.Migrations
+namespace NormfallstudieDatenservice.Migrations.Hilton
 {
     public partial class InitialCreate : Migration
     {
@@ -20,48 +20,36 @@ namespace NormfallstudieDatenservice.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Flights",
+                name: "HiltonNights",
                 columns: table => new
                 {
-                    FlightId = table.Column<int>(nullable: false)
+                    HiltonNightId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    StartDestinationDestinationId = table.Column<int>(nullable: true),
-                    EndDestinationDestinationId = table.Column<int>(nullable: true),
+                    DestinationId = table.Column<int>(nullable: true),
                     Date = table.Column<string>(nullable: true),
                     EmptyPlaces = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Flights", x => x.FlightId);
+                    table.PrimaryKey("PK_HiltonNights", x => x.HiltonNightId);
                     table.ForeignKey(
-                        name: "FK_Flights_Destinations_EndDestinationDestinationId",
-                        column: x => x.EndDestinationDestinationId,
-                        principalTable: "Destinations",
-                        principalColumn: "DestinationId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Flights_Destinations_StartDestinationDestinationId",
-                        column: x => x.StartDestinationDestinationId,
+                        name: "FK_HiltonNights_Destinations_DestinationId",
+                        column: x => x.DestinationId,
                         principalTable: "Destinations",
                         principalColumn: "DestinationId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Flights_EndDestinationDestinationId",
-                table: "Flights",
-                column: "EndDestinationDestinationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Flights_StartDestinationDestinationId",
-                table: "Flights",
-                column: "StartDestinationDestinationId");
+                name: "IX_HiltonNights_DestinationId",
+                table: "HiltonNights",
+                column: "DestinationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Flights");
+                name: "HiltonNights");
 
             migrationBuilder.DropTable(
                 name: "Destinations");

@@ -2,21 +2,19 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NormfallstudieDatenservice.Models;
 
-namespace NormfallstudieDatenservice.Migrations
+namespace NormfallstudieDatenservice.Migrations.Swiss
 {
     [DbContext(typeof(SwissContext))]
-    [Migration("20190702185543_InitialCreate")]
-    partial class InitialCreate
+    partial class SwissContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846");
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
 
             modelBuilder.Entity("NormfallstudieDatenservice.Models.Destination", b =>
                 {
@@ -30,9 +28,9 @@ namespace NormfallstudieDatenservice.Migrations
                     b.ToTable("Destinations");
                 });
 
-            modelBuilder.Entity("NormfallstudieDatenservice.Models.Flight", b =>
+            modelBuilder.Entity("NormfallstudieDatenservice.Models.SwissFlight", b =>
                 {
-                    b.Property<int>("FlightId")
+                    b.Property<int>("SwissFlightId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Date");
@@ -43,16 +41,16 @@ namespace NormfallstudieDatenservice.Migrations
 
                     b.Property<int?>("StartDestinationDestinationId");
 
-                    b.HasKey("FlightId");
+                    b.HasKey("SwissFlightId");
 
                     b.HasIndex("EndDestinationDestinationId");
 
                     b.HasIndex("StartDestinationDestinationId");
 
-                    b.ToTable("Flights");
+                    b.ToTable("SwissFlights");
                 });
 
-            modelBuilder.Entity("NormfallstudieDatenservice.Models.Flight", b =>
+            modelBuilder.Entity("NormfallstudieDatenservice.Models.SwissFlight", b =>
                 {
                     b.HasOne("NormfallstudieDatenservice.Models.Destination", "EndDestination")
                         .WithMany()
