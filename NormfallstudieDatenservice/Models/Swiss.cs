@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace NormfallstudieDatenservice.Models
 {
@@ -15,13 +16,9 @@ namespace NormfallstudieDatenservice.Models
         
     }
 
-    public class SwissFlight
+    public class SwissFlight : Flight
     {
         public int SwissFlightId { get; set; }
-        public Destination StartDestination { get; set; }
-        public Destination EndDestination { get; set; }
-        public string Date { get; set; }
-        public int EmptyPlaces { get; set; }  
     }
 
 }

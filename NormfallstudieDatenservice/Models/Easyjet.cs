@@ -15,13 +15,9 @@ namespace NormfallstudieDatenservice.Models
         
     }
 
-    public class EasyjetFlight
+    public class EasyjetFlight : Flight
     {
         public int EasyjetFlightId { get; set; }
-        public Destination StartDestination { get; set; }
-        public Destination EndDestination { get; set; }
-        public string Date { get; set; }
-        public int EmptyPlaces { get; set; }  
     }
 
 }

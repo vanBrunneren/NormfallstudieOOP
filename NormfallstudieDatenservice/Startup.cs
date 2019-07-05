@@ -17,7 +17,11 @@ namespace NormfallstudieDatenservice
                 opt.UseInMemoryDatabase("TodoList"));*/
 
             services.AddDbContext<SwissContext>();
+            services.AddDbContext<EasyjetContext>();
+            services.AddDbContext<HiltonContext>();
+            services.AddDbContext<IbisContext>();
             
+            services.AddScoped<IHttpClientFactory, HttpClientFactory>();
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
         }

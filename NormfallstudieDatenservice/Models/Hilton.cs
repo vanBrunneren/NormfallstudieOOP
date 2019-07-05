@@ -14,12 +14,9 @@ namespace NormfallstudieDatenservice.Models
         
     }
 
-    public class HiltonNight
+    public class HiltonNight : Night
     {
         public int HiltonNightId { get; set; }
-        public Destination Destination { get; set; }
-        public string Date { get; set; }
-        public int EmptyPlaces { get; set; }
     }
     
 }

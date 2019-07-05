@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using NormfallstudieDatenservice.Models;
 
 namespace NormfallstudieDatenservice.Controllers
@@ -16,7 +17,8 @@ namespace NormfallstudieDatenservice.Controllers
     public class LastminuteOffer
     {
         public int Id { get; set; }
-        
+        public Flight Flight { get; set; }     
+        public Night Night { get; set; }
     }
     
     [Route("api/[controller]")]
@@ -24,58 +26,90 @@ namespace NormfallstudieDatenservice.Controllers
     public class LastminuteController : ControllerBase
     {
         
-        static HttpClient client = new HttpClient();
-        
-        static async Task<LastminuteOffer> GetLastminuteOfferAsync(string path)
+        static IHttpClientFactory _httpClientFactory;
+
+        public LastminuteController(IHttpClientFactory httpClientFactory)
         {
-            LastminuteOffer offer = null;
+            _httpClientFactory = httpClientFactory;
+        }
+        
+        static async Task<string> GetLastminuteOfferAsync(string path)
+        {
+            var client = _httpClientFactory.CreateClient();
             HttpResponseMessage response = await client.GetAsync(path);
             if (response.IsSuccessStatusCode)
             {
-                offer = await response.Content.ReadAsAsync<LastminuteOffer>();
+                return await response.Content.ReadAsStringAsync();
             }
-            return offer;
+            
+            return null;
         }
 
         // GET api/lastminute
         [HttpGet]
-        public async Task GetLastminuteOffers()
+        public async Task<List<LastminuteOffer>> GetLastminuteOffers()
+        {
+            
+            
+            
+            //client.BaseAddress = new Uri("https://localhost:5001/");
+            //client.DefaultRequestHeaders.Accept.Clear();
+            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            string swissFlightsJson = await GetLastminuteOfferAsync("api/airline/swiss");
+            string easyjetFlightsJson = await GetLastminuteOfferAsync("api/airline/easyjet");
+
+            string ibisNightsJson = await GetLastminuteOfferAsync("/api/hotel/ibis");
+            string hiltonNightsJson = await GetLastminuteOfferAsync("/api/hotel/hilton");
+
+            List<SwissFlight> swissFlights = JsonConvert.DeserializeObject<List<SwissFlight>>(swissFlightsJson);
+            List<EasyjetFlight> easyjetFlights = JsonConvert.DeserializeObject<List<EasyjetFlight>>(easyjetFlightsJson);
+
+            List<IbisNight> ibisNights = JsonConvert.DeserializeObject<List<IbisNight>>(ibisNightsJson);
+            List<HiltonNight> hiltonNights = JsonConvert.DeserializeObject<List<HiltonNight>>(hiltonNightsJson);
+
+            List<LastminuteOffer> lastminuteOffers = new List<LastminuteOffer>();
+            
+            
+            
+            int id = 0;
+            foreach (var swissFlight in swissFlights)
+            {
+                
+                    lastminuteOffers.Add(new LastminuteOffer { Id = id, Flight = swissFlight});
+                    id++;
+                
+                
+            }
+            
+            //lastminuteOffers.Find(lastMinuteOffer => lastMinuteOffer.Id == 5);
+
+            return lastminuteOffers.ToList();
+
+        }
+    
+        /*
+        // GET api/lastminute/2019-07-02
+        [HttpGet("{date}")]
+        public async Task<List<LastminuteOffer>> GetLastminuteOffersByDate(string date)
         {
             client.BaseAddress = new Uri("https://localhost:5001/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
-            LastminuteOffer offer = new LastminuteOffer();
-            
-            try
-            {
-                offer = await GetLastminuteOfferAsync("/api/airline/easyjet");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            string swissFlightsJson = await GetLastminuteOfferAsync("api/airline/swiss");
+            string easyjetFlightsJson = await GetLastminuteOfferAsync("api/airline/easyjet");
 
-            /*
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:5001/");
-            
-            HttpResponseMessage response = await client.GetAsync("/api/airline/swiss");
-            response.EnsureSuccessStatusCode();
-            
-            var swissFlights = response.Content.ReadAsAsync<IEnumerable<SwissFlight>>();
-            
-            
-            response = await client.GetAsync("/api/airline/easyjet");
-            response.EnsureSuccessStatusCode();
+            string ibisNightsJson = await GetLastminuteOfferAsync("/api/hotel/ibis");
+            string hiltonNightsJson = await GetLastminuteOfferAsync("/api/hotel/hilton");
 
-            var easyjetFlights = response.Content.ReadAsAsync<IEnumerable<EasyjetFlight>>();
+            List<SwissFlight> swissFlights = JsonConvert.DeserializeObject<List<SwissFlight>>(swissFlightsJson);
             
-            return swissFlights;
-            */
-
+            
+            
         }
+        */
         
     }
 

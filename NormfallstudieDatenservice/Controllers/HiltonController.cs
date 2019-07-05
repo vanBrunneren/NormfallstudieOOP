@@ -16,6 +16,9 @@ namespace NormfallstudieDatenservice.Controllers
 
         public HiltonController(HiltonContext context)
         {
+
+            _context = context;
+            
             var Destinations = _context.Destinations.ToList();
             if (Destinations.Count != 5)
             {
