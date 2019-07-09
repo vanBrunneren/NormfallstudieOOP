@@ -40,6 +40,7 @@ namespace NormfallstudieDatenservice.Controllers
                 _context.SaveChanges();
 
             }
+            
         }
         
         // GET: api/hotel/ibis
@@ -68,6 +69,7 @@ namespace NormfallstudieDatenservice.Controllers
         [HttpPost]
         public async Task<ActionResult<HiltonNight>> PostIbisNight(IbisNight ibisNight)
         {
+
             _context.IbisNights.Add(ibisNight);
             await _context.SaveChangesAsync();
 

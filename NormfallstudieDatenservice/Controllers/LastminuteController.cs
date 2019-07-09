@@ -49,12 +49,6 @@ namespace NormfallstudieDatenservice.Controllers
         [HttpGet]
         public async Task<List<LastminuteOffer>> GetLastminuteOffers()
         {
-            
-            
-            
-            //client.BaseAddress = new Uri("https://localhost:5001/");
-            //client.DefaultRequestHeaders.Accept.Clear();
-            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             string swissFlightsJson = await GetLastminuteOfferAsync("api/airline/swiss");
             string easyjetFlightsJson = await GetLastminuteOfferAsync("api/airline/easyjet");
