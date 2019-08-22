@@ -16,9 +16,9 @@ namespace NormfallstudieDatenservice.Controllers
 
         public IbisController(IbisContext context)
         {
-
-            _context = context;
             
+            _context = context;
+            /*
             var Destinations = _context.Destinations.ToList();
             if (Destinations.Count != 5)
             {
@@ -40,6 +40,7 @@ namespace NormfallstudieDatenservice.Controllers
                 _context.SaveChanges();
 
             }
+            */
             
         }
         
@@ -67,9 +68,8 @@ namespace NormfallstudieDatenservice.Controllers
         
         // POST: api/hotel/ibis
         [HttpPost]
-        public async Task<ActionResult<HiltonNight>> PostIbisNight(IbisNight ibisNight)
+        public async Task<ActionResult<IbisNight>> PostIbisNight(IbisNight ibisNight)
         {
-
             _context.IbisNights.Add(ibisNight);
             await _context.SaveChangesAsync();
 

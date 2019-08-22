@@ -16,9 +16,9 @@ namespace NormfallstudieDatenservice.Controllers
 
         public HiltonController(HiltonContext context)
         {
-
-            _context = context;
             
+            _context = context;
+            /*
             var Destinations = _context.Destinations.ToList();
             if (Destinations.Count != 5)
             {
@@ -40,6 +40,7 @@ namespace NormfallstudieDatenservice.Controllers
                 _context.SaveChanges();
 
             }
+            */
         }
         
         // GET: api/hotel/hilton

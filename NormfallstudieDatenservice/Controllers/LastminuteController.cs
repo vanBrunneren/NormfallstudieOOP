@@ -59,25 +59,42 @@ namespace NormfallstudieDatenservice.Controllers
             List<SwissFlight> swissFlights = JsonConvert.DeserializeObject<List<SwissFlight>>(swissFlightsJson);
             List<EasyjetFlight> easyjetFlights = JsonConvert.DeserializeObject<List<EasyjetFlight>>(easyjetFlightsJson);
 
-            List<IbisNight> ibisNights = JsonConvert.DeserializeObject<List<IbisNight>>(ibisNightsJson);
+            
+            //List<IbisNight> ibisNights = JsonConvert.DeserializeObject<List<IbisNight>>(ibisNightsJson);
             List<HiltonNight> hiltonNights = JsonConvert.DeserializeObject<List<HiltonNight>>(hiltonNightsJson);
 
             List<LastminuteOffer> lastminuteOffers = new List<LastminuteOffer>();
-            
-            
-            
-            int id = 0;
-            foreach (var swissFlight in swissFlights)
+
+
+            string date = "2019-07-02";
+            int dest = 2;
+
+            SwissFlight selectedSwissFlight = swissFlights.Find(swissFlight => swissFlight.Date == date && swissFlight.EndDestination.DestinationId == dest);
+            EasyjetFlight selectedEasyjetFlight = easyjetFlights.Find(easyjetFlight => easyjetFlight.Date == date && easyjetFlight.EndDestination.DestinationId == dest);
+            //IbisNight selectedIbisNight = ibisNights.Find(ibisNight => ibisNight.Date == date && ibisNight.Destination.DestinationId == dest);
+            IbisNight selectedIbisNight = new IbisNight { Date = "2019-07-02", Destination = selectedSwissFlight.EndDestination, EmptyPlaces = 100 };
+            HiltonNight selectedHiltonNight = hiltonNights.Find(hiltonNight => hiltonNight.Date == date && hiltonNight.Destination.DestinationId == dest);
+
+            if (selectedSwissFlight != null && selectedIbisNight != null)
             {
-                
-                    lastminuteOffers.Add(new LastminuteOffer { Id = id, Flight = swissFlight});
-                    id++;
-                
-                
+                lastminuteOffers.Add(new LastminuteOffer {Flight = selectedSwissFlight, Night = selectedIbisNight});
+            }
+
+            if (selectedEasyjetFlight != null && selectedIbisNight != null)
+            {
+                lastminuteOffers.Add(new LastminuteOffer {Flight = selectedEasyjetFlight, Night = selectedIbisNight});
+            }
+
+            if (selectedSwissFlight != null && selectedHiltonNight != null)
+            {
+                lastminuteOffers.Add(new LastminuteOffer { Flight = selectedSwissFlight, Night = selectedHiltonNight});
+            }
+
+            if (selectedEasyjetFlight != null && selectedHiltonNight != null)
+            {
+                lastminuteOffers.Add(new LastminuteOffer { Flight = selectedEasyjetFlight, Night = selectedHiltonNight});
             }
             
-            //lastminuteOffers.Find(lastMinuteOffer => lastMinuteOffer.Id == 5);
-
             return lastminuteOffers.ToList();
 
         }
