@@ -14,7 +14,7 @@ namespace NormfallstudieDatenservice.Controllers
     public class SwissController : ControllerBase
     {
 
-        private static SwissContext _context;
+        private readonly SwissContext _context;
 
         public SwissController(SwissContext context)
         {
@@ -46,7 +46,7 @@ namespace NormfallstudieDatenservice.Controllers
         
         // GET: api/airline/swiss
         [HttpGet]
-        public static async Task<ActionResult<IEnumerable<SwissFlight>>> GetSwissFlights()
+        public async Task<ActionResult<IEnumerable<SwissFlight>>> GetSwissFlights()
         {
             return await _context.SwissFlights.ToListAsync();
         }
